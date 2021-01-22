@@ -32,11 +32,14 @@ ListTile drawerTile({IconData iconData,String title, }){
 }
 
 tipsContainer(String title){
-  return Container(margin: EdgeInsets.only(left:10.0),child:Text(title,textAlign: TextAlign.start,style: TextStyle(color: Colors.black,fontSize:20.0,fontWeight: FontWeight.bold,letterSpacing: 1.0),),);
+  return Container(margin: EdgeInsets.only(left:10.0),child:Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Text(title,textAlign: TextAlign.start,style: TextStyle(color: Colors.black,fontSize:20.0,fontWeight: FontWeight.bold,letterSpacing: 1.0),),
+  ),);
 }
 tipsCard(String image,String subtitle){
   return Padding(
-    padding: const EdgeInsets.all(12.0),
+    padding: const EdgeInsets.all(16.0),
     child: Card(
       child: Column(
         children: [
@@ -44,7 +47,10 @@ tipsCard(String image,String subtitle){
           SizedBox(
             height: 15.0,
           ),
-          Text(subtitle,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18.0),)
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Text(subtitle,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18.0),),
+          )
         ],
       ),
     ),

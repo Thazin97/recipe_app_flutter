@@ -6,6 +6,7 @@ import 'package:receipes/screens/drawer_page.dart';
 import 'package:receipes/screens/registration_page.dart';
 import 'package:receipes/themes/colors.dart';
 import 'package:receipes/widgets/widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class MyLoginPage extends StatefulWidget {
@@ -119,6 +120,8 @@ class _MyLoginPageState extends State<MyLoginPage> {
                                         email: email, password: password);
                                     print(newUser.toString());
                                     if (newUser != null) {
+                                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                                      prefs.setString('email', email);
                                       Fluttertoast.showToast(
                                           msg: "Login Successful",
                                           toastLength: Toast.LENGTH_SHORT,

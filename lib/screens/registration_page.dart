@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:receipes/themes/colors.dart';
 import 'package:receipes/widgets/widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login_page.dart';
 
@@ -150,7 +151,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                   await _auth.createUserWithEmailAndPassword(
                                       email: email, password: password);
                                   if (newuser != null) {
-
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
