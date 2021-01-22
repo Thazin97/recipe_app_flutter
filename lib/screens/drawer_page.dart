@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:receipes/model/recipe_model.dart';
 import 'package:receipes/screens/recipe_videos.dart';
@@ -11,6 +12,7 @@ import 'package:receipes/services/auth.dart';
 import 'package:receipes/themes/colors.dart';
 import 'package:http/http.dart'as http;
 import 'package:receipes/widgets/widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'kitchen_tips.dart';
 import 'login_page.dart';
@@ -44,9 +46,11 @@ class _DrawerPageState extends State<DrawerPage> {
   List<RecipeModel> recipes = new List();
   String ingredients;
 
-  bool _loading ;
+  bool _loading = false ;
   String query = "";
   TextEditingController textEditingController = new TextEditingController();
+
+
 
   @override
   void initState() {
@@ -109,7 +113,9 @@ class _DrawerPageState extends State<DrawerPage> {
               Navigator.push(context, MaterialPageRoute(builder: (context)=> KitchenTips()));  //edit
             },),
             divider(),
-            GestureDetector(child: drawerTile(iconData: Icons.logout,title: 'Log Out'),onTap: (){
+            GestureDetector(child: drawerTile(iconData: Icons.logout,title: 'Log Out'),onTap: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.remove('email');
               signOut();
               setState(() {
                 final route = MaterialPageRoute(builder: (BuildContext context) => MyLoginPage());
@@ -130,7 +136,9 @@ class _DrawerPageState extends State<DrawerPage> {
           ],
         ),
       ),
-      body: Stack(
+      body: ModalProgressHUD(
+      inAsyncCall: _loading,
+      child:Stack(
         children: <Widget>[
           Container(
             height: MediaQuery.of(context).size.height,
@@ -276,22 +284,19 @@ class _DrawerPageState extends State<DrawerPage> {
           )
         ],
       ),
-    );
+    ));
   }
 
   Widget displayUserInformation(context, snapshot) {
     final authData = snapshot.data;
-
-    return Row(
-      children:[
-        Padding(
-          padding: const EdgeInsets.only(top:110.0),
-          child: Text(
-          " ${authData.email ?? 'Anonymous'}",
-          style: TextStyle(fontSize: 20,color:AppColor.midnightblue),
-      ),
-        ),
-    ]);
+    return
+     Padding(
+       padding: const EdgeInsets.only(top:117.0),
+       child: Text(
+                    " ${authData.email ?? 'Anonymous'}",
+                    style: TextStyle(fontSize:16,color:AppColor.fontColor,fontFamily: 'Mogella',fontWeight: FontWeight.bold),
+       ),
+     );
   }
 }
 
@@ -344,7 +349,7 @@ class _RecipeTileState extends State<RecipeTile> {
                   alignment: Alignment.bottomLeft,
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
-                          colors: [Colors.white10,AppColor.nudengapi],
+                          colors: [Colors.white,Colors.amber[200]],
                           begin: FractionalOffset.centerRight,
                           end: FractionalOffset.centerLeft)),
                   child: Padding(
