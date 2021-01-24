@@ -55,12 +55,6 @@ class KitchenTips extends StatelessWidget {
           tipsContainer('10. Use cooking spray to make less of a mess'),
           SizedBox(height: 5.0,),
           tipsCard('images/cooking spray.jpg','When measuring out super sticky ingredients, coat your measuring cup with a butter or oil-based cooking spray first. It ensures the sticky substance will slide right out and prevent you from having to scrub at your cups forever afterward.'),
-          SizedBox(height:20.0,),
-          Text('crd #https://www.delish.com/kitchen-tools/g25654407/best-kitchen-tips/')
-
-
-
-
         ],
         ),);
   }
